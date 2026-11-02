@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Law Offices of Victoria Clemans monogram">
+  <rect width="64" height="64" rx="8" fill="#141c2b"/>
+  <rect x="5.5" y="5.5" width="53" height="53" rx="5" fill="none" stroke="#a07b35" stroke-width="2"/>
+  <text x="32" y="42" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="27" font-weight="700" fill="#f8f6f2">VC</text>
+</svg>
