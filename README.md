@@ -49,6 +49,22 @@ JavaScript is unavailable or the request fails, the browser performs a plain
 POST and the visitor returns with `?submitted=1`, which also renders the
 confirmation.
 
+### GoHighLevel sync
+
+Alongside the LeadrVision submission, `main.js` posts the same payload to
+`api/ghl-contact.js`, which creates or updates the contact in the GoHighLevel
+sub-account (location `zWrqTLGrbnMMy9BmMcwK`) with first name, last name,
+phone, email and the message, sets the custom fields `Lead Source` to
+`Website` and `Website Form` to the form name, and adds the tag
+`website-lead`. The message — plus any extra answers such as "Type of matter"
+— is also written as a note on the contact.
+
+The API token is server-side only: set `GHL_API_TOKEN` in the hosting
+environment (a Private Integration token for that sub-account, with contact
+read/write and custom-field read scopes). `GHL_LOCATION_ID` can override the
+location id. If the token is missing, the endpoint returns `503` and the
+visitor's form submission is unaffected.
+
 ## Notes
 
 - All review text, the 5.0/12 rating and the contact details come from the

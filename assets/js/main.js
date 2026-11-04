@@ -4,6 +4,8 @@
   "use strict";
 
   var FORM_ENDPOINT = "https://vision.leadrai.com/api/forms/91fd01ec81f92a32155959cca7aadbf9";
+  /* Server-side GoHighLevel sync (create/update contact, tag "website-lead"). */
+  var CRM_ENDPOINT = "/api/ghl-contact";
   var THANKS = "Thanks, your message was sent. We will be in touch. If your matter is urgent, please call (310) 488-6357.";
 
   /* ---------- Mobile navigation ---------- */
@@ -72,6 +74,27 @@
     }
   }
 
+  /* ---------- GoHighLevel contact sync ----------
+     Runs alongside the LeadrVision submission. It never blocks the visitor:
+     a failure here is ignored, and the message itself still goes through the
+     form endpoint. */
+  function sendToCrm(payload) {
+    if (!window.fetch) return;
+    try {
+      fetch(CRM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {
+      /* nothing to do — the form submission is unaffected */
+    }
+  }
+
   /* ---------- fetch() submission with a plain-POST fallback ---------- */
   function initForms() {
     var forms = document.querySelectorAll("form[data-leadr]");
@@ -96,6 +119,8 @@
           payload[key] = value;
         });
         payload._page = window.location.href;
+
+        sendToCrm(payload);
 
         if (button) {
           button.disabled = true;
